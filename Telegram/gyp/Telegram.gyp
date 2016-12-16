@@ -57,7 +57,7 @@
         'ko',
         'pt-BR',
       ],
-      'travis_defines%': '',
+      'build_defines%': '',
     },
     'includes': [
       'common_executable.gypi',
@@ -79,7 +79,7 @@
 
     'defines': [
       'AL_LIBTYPE_STATIC',
-      '<!@(python -c "for s in \'<(travis_defines)\'.split(\',\'): print(s)")',
+      '<!@(python -c "for s in \'<(build_defines)\'.split(\',\'): print(s)")',
     ],
 
     'include_dirs': [
