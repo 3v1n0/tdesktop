@@ -218,6 +218,7 @@ parts:
     qt-patches-path: ../../Patches
     build-packages:
       - libasound2-dev
+      - libdbusmenu-glib-dev
       - libffi-dev
       - liblzma-dev
       - libpulse-dev
