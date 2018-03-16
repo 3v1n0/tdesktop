@@ -62,10 +62,10 @@ addons:
       - yasm
 
 before_install:
-  - export CXX="g++-7" CC="gcc-7"
-  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 --slave /usr/bin/g++ g++ /usr/bin/g++-7
-  - sudo update-alternatives --config gcc
-  - g++ --version
+  # - export CXX="g++-7" CC="gcc-7"
+  # - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+  # - sudo update-alternatives --config gcc
+  # - g++ --version
   - .travis/snap-build.sh before_install
 
 install:
