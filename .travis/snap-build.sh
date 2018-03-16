@@ -13,7 +13,6 @@ fi
 
 REPO="$PWD"
 THIS_PATH=$(dirname $0)
-UPSTREAM="$REPO/upstream"
 CACHE="$HOME/travisCacheDir"
 
 DOCKER_IMAGE="ubuntu:xenial"
@@ -34,13 +33,13 @@ if [ "$TRAVIS_BUILD_STEP" == "before_install" ]; then
   sudo apt-get install -y python3-yaml
   if [ -n "$ARCH" ]; then DOCKER_IMAGE="$ARCH/$DOCKER_IMAGE"; fi
     docker run --name $DOCKER_BUILDER_NAME -e LANG=C.UTF-8 -e TERM \
-     -v $PWD:$PWD -w $UPSTREAM -td $DOCKER_IMAGE
+     -v $PWD:$PWD -w $REPO -td $DOCKER_IMAGE
 elif [ "$TRAVIS_BUILD_STEP" == "install" ]; then
   docker_exec apt-get update -q
   docker_exec apt-get install -y snapcraft
 elif [ "$TRAVIS_BUILD_STEP" == "script" ]; then
   build_type="Debug"
-  snapcraft_yaml="$UPSTREAM/snap/snapcraft.yaml"
+  snapcraft_yaml="$REPO/snap/snapcraft.yaml"
 
   sed "s,CMAKE_BUILD_TYPE=.*,CMAKE_BUILD_TYPE=$build_type,g;
        s,build-type:.*,build-type: '$build_type',g" \
