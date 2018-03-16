@@ -7,6 +7,9 @@ cache:
   directories:
     - $HOME/travisCacheDir
 
+services:
+- docker
+
 env:
   matrix:
    # - BUILD_VERSION=""

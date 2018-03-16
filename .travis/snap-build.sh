@@ -2,10 +2,12 @@
 
 set -xe
 
+source ./.travis/common.sh
+
 TRAVIS_BUILD_STEP="$1"
 
 if [ -z "$TRAVIS_BUILD_STEP" ]; then
-  echo "No travis build step defined"
+  error_msg "No travis build step defined"
   exit 1
 fi
 
@@ -23,12 +25,13 @@ function docker_exec() {
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
   if [ "$SNAP_PRIME_ON_PULL_REQUEST" != "true" ]; then
-    echo '$SNAP_PRIME_ON_PULL_REQUEST is not set to true, thus we skip this now'
+    info_msg '$SNAP_PRIME_ON_PULL_REQUEST is not set to true, thus we skip this now'
     exit 0
   fi
 fi
 
 if [ "$TRAVIS_BUILD_STEP" == "before_install" ]; then
+  sudo apt-get install -y python3-yaml
   if [ -n "$ARCH" ]; then DOCKER_IMAGE="$ARCH/$DOCKER_IMAGE"; fi
     docker run --name $DOCKER_BUILDER_NAME -e LANG=C.UTF-8 -e TERM \
      -v $PWD:$PWD -w $UPSTREAM -td $DOCKER_IMAGE
