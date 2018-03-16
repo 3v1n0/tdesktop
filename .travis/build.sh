@@ -2,6 +2,10 @@
 
 set -e
 
+if [[ $BUILD_VERSION == *"snap"* ]]; then
+  exit 0
+fi
+
 REPO="$PWD"
 
 BUILD="$REPO/build"
