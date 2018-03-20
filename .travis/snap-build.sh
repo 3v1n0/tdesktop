@@ -22,6 +22,23 @@ function docker_exec() {
   docker exec -i $DOCKER_BUILDER_NAME $*
 }
 
+function snap_dependencies() {
+  snapcraft_yaml="$1"
+  root_part="$2"
+  python3 - << EOF
+import yaml
+
+with open("$snapcraft_yaml", 'r') as stream:
+  try:
+    parts = yaml.load(stream)['parts']
+    independent_parts = [p for p in parts if not 'after' in parts[p]]
+    dependencies = parts['$root_part']['after']
+    print(" ".join(set(independent_parts + dependencies)))
+  except yaml.YAMLError as exc:
+    print(exc)
+EOF
+}
+
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
   if [ "$SNAP_PRIME_ON_PULL_REQUEST" != "true" ]; then
     info_msg '$SNAP_PRIME_ON_PULL_REQUEST is not set to true, thus we skip this now'
